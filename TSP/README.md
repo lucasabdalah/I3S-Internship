@@ -22,8 +22,21 @@ opts_btdgl.maxit = 1.5e3 / 3; % Value max for iterations
 | Variable         | Value         | Description   | Obs           |
 | :--------------: | :-----------: | :-----------: | :-----------: |
 | tau              | 0.0001        | ------------- | ------------- |
+| gamma            | 1e-1          | ------------- | ------------- |
 | opts_btdgl.tol   | 1e-8          | ------------- | ------------- |
 | opts_btdgl.maxit | 500           | ------------- | ------------- |
-| :--------------: | :-----------: | :-----------: | :-----------: |
+| -------------    | ------------- | ------------- | ------------- |
 
+
+## BTD-GN
+
+| Variable         | Value         | Description   | Obs           |
+| :--------------: | :-----------: | :-----------: | :-----------: |
+| tau              | 0.0001        | ------------- | ------------- |
+| opts_btdgl.tol   | 1e-8          | ------------- | ------------- |
+| opts_btdgl.maxit | 500           | ------------- | ------------- |
+| -------------    | ------------- | ------------- | ------------- |
+
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=x&space;&plus;&space;b" target="_blank"><img src="https://latex.codecogs.com/svg.latex?x&space;&plus;&space;b" title="x + b" /></a>
 
