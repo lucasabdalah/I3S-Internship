@@ -1,0 +1,337 @@
+\documentclass{beamer}
+
+\bibliographystyle{Latex/Classes/PhDbiblio-case}
+
+\usepackage[latin1]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[mathscr]{eucal}
+\usepackage{textcomp}
+\usepackage{subfig}
+\usepackage{epsfig}
+\usepackage{multirow}
+\usepackage{hhline}
+\usepackage{bm}
+
+\beamertemplatetextbibitems
+
+\usetheme{Boadilla}
+\usecolortheme{seahorse}
+\usepackage[latin1]{inputenc}
+
+\title[CinC 2020]{Tensor-Based Noninvasive Atrial Fibrillation Complexity Index For Catheter Ablation} 
+\author[Lucas de S. Abdalah]{Lucas de S. Abdalah, Pedro Marinho R. de Oliveira, Vicente Zarzoso, Walter Freitas Jr.}
+\date{Sep $16^{th}$, 2020} 
+
+\titlegraphic{\includegraphics[scale = 0.055]{UCA_logo} \includegraphics[scale = 0.150]{I3S_logo}}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\section[Outline]{}
+\frame{\tableofcontents}
+
+
+\section{Introduction} 
+
+\frame {
+
+	\begin{center}
+		\Large{Introduction}
+	\end{center}
+
+}
+
+\frame {
+	\frametitle{Atrial Fibrillation}
+	
+	\begin{itemize}
+		\item Atrial Fibrillation (AF) is the most common sustained cardiac arrhythmia in clinical practice.
+	\end{itemize}
+	
+	\begin{figure}
+		\centering
+		\includegraphics[scale=0.2]{AF_ECG}
+	\end{figure}
+	\vspace{-0.8in}
+	\begin{itemize}
+		\item The mechanisms behind AF are complex and not completely understood
+		\begin{itemize}
+			\item Intensive clinical research increased in the past few years.
+		\end{itemize}
+	\end{itemize}
+	
+}
+
+\frame {
+	\frametitle{Signal Processing Techniques}
+	
+	\begin{itemize}
+		\item Signal processing techniques appear as a key tool to understand and manage better this challenge.
+	\end{itemize}
+	
+	\vspace{0.3in}
+	
+	The electrocardiogram (ECG) data matrix can be modeled as:
+	\begin{equation}
+	\textbf{Y} = \textbf{MS} \in \mathbb{R}^{K \times N} \; ,
+	\label{bssp}
+	\end{equation}
+	where $\textbf{M} \in \mathbb{R}^{K \times R}$ is a mixing matrix and $\textbf{S} \in \mathbb{R}^{R \times N}$ is the source matrix.	
+	
+	\vspace{0.3in}
+	
+	\begin{itemize}
+		\item Blind source separation (BSS) problem
+		\begin{itemize}
+			\item Goal: to estimate $\textbf{M}$ and $\textbf{S}$ knowing only $\textbf{Y}$.
+		\end{itemize}
+	\end{itemize}
+	
+}
+	
+\frame {
+	\frametitle{Atrial Source Classification}
+	
+	\begin{block}{Challenge}
+		After performing the BSS, the automated atrial activity (AA) source classification is still a problem.
+	\end{block}
+
+	\begin{itemize}
+		\item The spectral concentration (SC) was proposed as an AA quality index\footnote{Castells \textit{et al}., ``Spatiotemporal blind source separation approach to atrial activity estimation in atrial tachyarrhythmias'', \textit{IEEE Trans. Biomed. Eng.}, 2005.}.
+			\item Choose the source with highest SC
+			\begin{itemize}
+				\item Weak sources can be mistaken as atrial sources.
+			\end{itemize}
+\end{itemize}
+
+}
+
+\frame {
+	\frametitle{Atrial Source Classification}
+	
+		\begin{itemize}
+			\item The kurtosis in the frequency domain was introduced as a new AA quality index\footnote{\label{LVAICA}De Oliveira and Zarzoso, ``Source analysis and selection using block term decomposition in atrial fibrillation'', in \textit{Proc. LVA/ICA}, 2018.}.
+		\end{itemize}
+		
+	\begin{itemize}
+		\item Two new methods of AA source selection were proposed\footnotemark[2]
+		\begin{enumerate}
+			\item Discard weak sources.
+			\item Select the source with higher SC (PM1) or higher kurtosis (PM2).
+		\end{enumerate}
+	\end{itemize}
+	\vspace{0.2in}
+	\begin{center}
+		{\Large Accuracy can still be improved!}
+	\end{center}
+	\vspace{0.2in}
+	\begin{itemize}
+		\item A better index to measure AA estimation quality.
+		\item Machine learning algorithms for classification.
+	\end{itemize}
+	
+}
+
+\section{Methods}
+
+\frame {
+
+	\begin{center}
+		\Large{Methods}
+	\end{center}
+
+}
+	
+\frame { 
+	\frametitle{Blind Source Separation Techniques} 
+	
+	\begin{itemize}
+		\item Principal component analysis (PCA)
+		\begin{itemize}
+			\item Orthogonal linear transformation in the original data.
+			\item Sources are mutually uncorrelated.
+		\end{itemize}
+		\vspace{0.1in}
+		\item Robust independent component analysis (RobustICA-f)
+		\begin{itemize}
+			\item Variant of ICA.
+			\item Statistically independent sources.
+		\end{itemize}
+		\vspace{0.1in}
+		\item Hankel-based block term decomposition (BTD)
+		\begin{itemize}
+			\item Tensor factorization technique.
+			\item Explores the nature of AA during AF.
+		\end{itemize}
+	\end{itemize}
+		
+}
+
+\frame { 
+	\frametitle{Machine Learning Algorithms}
+	
+	\begin{block}{Features}
+		\begin{itemize}
+			\item SC.
+			\item Kurtosis.
+			\item The normalized mean square error of the TQ segment (NMSE-TQ) on lead V1 between the original recording and the source estimate
+				\begin{equation}
+					NMSE\textrm{-}TQ = \left[ \frac{||m^{(V1)}_{r} \textbf{s}_{r.} - \textbf{y}^{(V1)}||_F^2}{||\textbf{y}^{(V1)}||_F^2} \right]_{TQ} \; .
+				\end{equation}
+		\end{itemize}
+	\end{block}
+	
+	\begin{itemize}
+		\item Classifiers
+		\begin{itemize}
+			\item Linear and quadratic discriminant analysis (LDA and QDA).
+			\item Support vector machine (SVM).
+		\end{itemize}
+	\end{itemize}
+	
+	
+} 
+
+\section{Experimental Results}
+
+\frame {
+
+	\begin{center}
+		\Large{Experimental Results}
+	\end{center}
+
+}
+
+\frame { 
+	\frametitle{Database and Experimental Setup} 
+	
+	\begin{block}{Database}
+		\begin{itemize}
+			\item 30 patients suffering from persistent AF.
+			\item ECG segments from 0.82 to 1.75 seconds.
+		\end{itemize}
+		
+		\begin{center}
+			Cardiology Department of Princess Grace Hospital Center, Monaco.
+		\end{center}					
+	\end{block}	
+	
+	\begin{itemize}
+		\item RobustICA-f was implemented using the RobustICA toolbox.
+		\item Hankel-based BTD was implemented using the Tensorlab toolbox.
+	\end{itemize}
+
+}
+
+\frame { 
+	\frametitle{Classification} 
+	
+		\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}[t]
+				\vspace{-0.3in}
+				%\centering
+				\includegraphics[scale=0.2]{Figure1.eps}
+				%\caption{3. Distribution of SC values (\%) for each version of BTD, as well as PCA and RobustICA-f.}
+				\label{Figure2}
+			\end{figure}
+		\end{column}
+		\begin{column}{0.5\textwidth}  %%<--- here
+   			\begin{itemize}
+   				\item 1283 sources
+   				\begin{itemize}
+   					\item 551 AA sources.
+   					\item 732 non-AA sources.
+   				\end{itemize}
+   				\item Lead V1 is taken as reference.
+   				\item 80\% for training and 20\% for testing.
+   			\end{itemize}
+		\end{column}
+	\end{columns}
+
+}
+
+\frame {
+	\frametitle{Classification}
+	
+	\begin{figure}[t]
+		\vspace{-0.3in}
+		%\centering
+		\includegraphics[scale=0.38]{Figure2.eps}
+		%\caption{3. Distribution of SC values (\%) for each version of BTD, as well as PCA and RobustICA-f.}
+		\label{Figure2}
+	\end{figure}
+
+}
+
+\frame {
+	\frametitle{Classification}
+	
+	\begin{block}{SC ($\mu \pm \sigma$)}
+		\begin{itemize}
+			\item AA sources: $61.8 \pm 15.1$
+			\item non-AA sources: $37.8 \pm 14.5$
+		\end{itemize}
+	\end{block}
+	
+	\begin{block}{Kurtosis ($\mu \pm \sigma$)}
+		\begin{itemize}
+			\item AA sources: $141.3 \pm 65.4$
+			\item non-AA sources: $41.7 \pm 29.1$
+		\end{itemize}
+	\end{block}
+	
+	
+	\begin{block}{NMSE-TQ ($\mu \pm \sigma$)}
+		\begin{itemize}
+			\item AA sources: $1.6 \pm 3.0$
+			\item non-AA sources: $34.9 \pm 111.0$
+		\end{itemize}
+	\end{block}
+
+
+}
+
+\section{Conclusions} 
+
+\frame {
+
+	\begin{center}
+		\Large{Conclusions}
+	\end{center}
+	
+	
+}
+
+\frame {
+	\frametitle{Conclusions}
+	
+	\begin{itemize}
+		\item BSS methods are important tools for AA extraction in AF ECGs
+		\begin{itemize}
+			\item AA estimation quality is challenging without a ground-truth.
+			\item Automated source classification can still improve.
+		\end{itemize}
+	\end{itemize}
+	
+	\begin{block}{Contributions}
+		\begin{itemize}
+			\item A new index for AA estimation quality measurement.
+			\item AA source classification with machine learning algorithms.
+			\item Assessment in a database of 30 patients.
+		\end{itemize}
+	\end{block}
+	
+	\begin{block}{Future Works}
+		\begin{itemize}
+			\item Assess the performance of other classifiers.
+			\item Perform unsupervised classification.
+			\item Increase the database of patients.
+		\end{itemize}
+	\end{block}
+	
+}
+
+\end{document}
