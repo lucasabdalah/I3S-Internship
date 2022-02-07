@@ -1,6 +1,7 @@
 \documentclass{beamer}
 
-\usepackage[latin1]{inputenc}
+% \usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage[mathscr]{eucal}
@@ -14,40 +15,55 @@
 
 \beamertemplatetextbibitems
 
+%% Current
 \usetheme{Boadilla}
 \usecolortheme{seahorse}
 
+%% Table of contents at beginning of each section
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>
+    % \frametitle{Section \thesection}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+
 %% Footnote for Figures
-\newcommand\blfootnote[1]{%
+\newcommand\blfootnote[1]
+{%
    \begingroup
    \renewcommand\thefootnote{}\footnote{#1}%
    \addtocounter{footnote}{-1}%
    \endgroup
 }
 
-\usepackage[latin1]{inputenc}
 
-\title[CinC 2020]{Tensor-Based Noninvasive Atrial Fibrillation Complexity Index For Catheter Ablation} 
-\author[Lucas de S. Abdalah]{\textbf{Lucas de S. Abdalah}, Pedro Marinho R. de Oliveira, Walter Freitas Jr,\\Vicente Zarzoso}
-\date{Sep 16{\textsuperscript{th}}, 2020}
+\title[Undergraduate Thesis Seminar - TI0133]{Noninvasive Assessment of Atrial Fibrillation Complexity Using Tensor Decomposition Techniques} 
+\author[Lucas Abdalah]{\textbf{Lucas Abdalah}}
+\institute[]{\small {Advisor: Prof. Walter da Cruz Freitas Jr}}
+\date{{Feb 08{\textsuperscript{th}}, 2022}}
 
 \begin{document}
 %% ------------------------- Title --------------------------------------------
 	\begin{frame}
 		\begin{figure}[!htb]
 			\centering
-			\includegraphics[scale=0.055]{UCA_logo} \includegraphics[scale=0.150]{I3S_logo} \includegraphics[scale=0.025]{CNRS_logo.png} \includegraphics[scale=0.130]{UFC_logo.png}
+			{\includegraphics[scale=0.065]{logo/UFC_Logo_300.png} \hspace{10px} \includegraphics[scale=0.150]{logo/I3S_logo} \hspace{20px} \includegraphics[scale=0.025]{logo/CNRS_logo.png}}
 		\end{figure}
-		\vspace{-0.4cm}
+		% \vspace{-0.4cm}
 
 		\titlepage
+	\end{frame}
+
+	\begin{frame}
+		\tableofcontents
 	\end{frame}
 
 %% ------------------------- Introduction -------------------------------------
 \section{Introduction} 
 	
-	\begin{frame}
-		\frametitle{Atrial Fibrillation}	
+	\begin{frame}{Atrial Fibrillation}	
 		
 		\begin{itemize}
 			\item Atrial Fibrillation (AF) is the most common sustained cardiac arrhythmia encountered in clinical practice.
@@ -57,7 +73,7 @@
 		\end{itemize}
 		\begin{figure}
 			\centering
-			\includegraphics[scale=0.2]{AF_ECG-eps-converted-to.pdf}
+			\includegraphics[scale=0.2]{fig/AF_ECG-eps-converted-to.pdf}
 		\end{figure}
 		\vspace{-0.8in}	
 		\begin{itemize}
@@ -65,12 +81,11 @@
 		\end{itemize}
 	\end{frame}
 
-	\begin{frame}
-		\frametitle{Step-wise Catheter Ablation (CA)}
+	\begin{frame}{Step-wise Catheter Ablation (CA)}
 		
 		\begin{figure}[h]
 			\centering
-			\includegraphics[scale=1.2,clip=true,trim={3.55cm 21.95cm 13.8cm 2.0cm}]{CA_figure.pdf}
+			\includegraphics[scale=1.2,clip=true,trim={3.55cm 21.95cm 13.8cm 2.0cm}]{fig/CA_figure.pdf}
 		\end{figure}
 		\blfootnote{Figure from Tim Helps $^{\text{\tiny{\copyright}}}$ 2017 Johns Hopkins University, AAM}
 		\vspace{-0.8cm}
@@ -82,8 +97,7 @@
 		\end{itemize}
 	\end{frame}
 
-	\begin{frame}
-		\frametitle{Matrix Approach}
+	\begin{frame}{Matrix Approach}
 	
 		The ECG data matrix can be modeled as:
 		\begin{equation}
@@ -93,15 +107,14 @@
 		\vspace{-0.4cm}
 		\begin{figure}[htb]
 			\centering
-			\includegraphics[scale=0.5]{bss_fig.png}
+			\includegraphics[scale=0.5]{fig/bss_fig.png}
 		\end{figure}
 	\end{frame}
 		
 %% ------------------------- Methods ------------------------------------------
 \section{Methods}
 
-	\begin{frame}
-		\frametitle{Tensor Approach}
+	\begin{frame}{Tensor Approach}
 		
 		\begin{itemize}
 			\item The ECG data can be modeled as a 3rd-order tensor ${\mathcal{Y}}$ via row-Hankelization.
@@ -112,16 +125,16 @@
 		\vspace{-0.7cm}
 		\begin{figure}[htb]
 			\centering
-			\includegraphics[scale=0.8,clip=true,trim={0.8cm 6.5cm 0.6cm 6.2cm}]{tikz_BTDY.pdf}
+			\includegraphics[scale=0.8,clip=true,trim={0.8cm 6.5cm 0.6cm 6.2cm}]{fig/tikz_BTDY.pdf}
 		\end{figure}
 		\vspace{2.3cm}
 		\begin{itemize}
 			\item Block Term Tensor Decomposition (BTD) based on Hankel structure\footnote{De Lathauwer, ``Blind separation of exponential polynomials and the decomposition of a tensor in rank-($L_{r}$,$L_{r}$,1) terms,'' \textit{SIAM J. Matrix Anal. Appl.}, 2011.}.
 		\end{itemize}
 	\end{frame}
-		
-	\begin{frame}
-		\frametitle{BTD-Hankel Model}
+
+
+	\begin{frame}{BTD-Hankel Model}
 		
 		\vspace{-0.5cm}
 		\begin{block}{Low-rank Hankel structure}
@@ -143,14 +156,13 @@
 				\begin{figure}[htb]
 					\vspace{-5.0cm}
 					\centering
-					\includegraphics[scale=0.66,clip=true,trim={1.5cm 8.5cm 1.8cm 8.3cm}]{tikz_mapHankel.pdf}
+					\includegraphics[scale=0.66,clip=true,trim={1.5cm 8.5cm 1.8cm 8.3cm}]{fig/tikz_mapHankel.pdf}
 				\end{figure}
 			\end{column}
 		\end{columns}
 	\end{frame}
 
-	\begin{frame}
-		\frametitle{Tensor Approach}
+	\begin{frame}{Tensor Approach}
 		
 		\vspace{-3.5cm}
 		\begin{itemize}
@@ -161,17 +173,16 @@
 		\begin{figure}[!ht]
 			\centering
 			\vspace{-3.5cm}
-			\includegraphics[scale=1.0,trim={1.0cm 8.5cm 1.0cm 7.3cm},clip=true]{tikz_tensorHankel.pdf}
+			\includegraphics[scale=1.0,trim={1.0cm 8.5cm 1.0cm 7.3cm},clip=true]{fig/tikz_tensorHankel.pdf}
 		\end{figure}
 	\end{frame}
 
-	\begin{frame}
-		\frametitle{BTD Approach}
+	\begin{frame}{BTD Approach}
 		
 		\vspace{-0.7cm}
 		\begin{figure}[htb]
 			\centering
-			\includegraphics[scale=1.0,clip=true,trim={0.8cm 6.5cm 0.6cm 6.2cm}]{tikz_BTDY.pdf}
+			\includegraphics[scale=1.0,clip=true,trim={0.8cm 6.5cm 0.6cm 6.2cm}]{fig/tikz_BTDY.pdf}
 		\end{figure}
 		\vspace{2.8cm}
 		\begin{block}{Challenge}			
@@ -188,8 +199,7 @@
 		\end{block}
 	\end{frame}
 
-	\begin{frame}
-		\frametitle{Constrained Alternating Group Lasso}
+	\begin{frame}{Constrained Alternating Group Lasso}
 		
 		\begin{block}{Classical BTD Approach}
 			\begin{itemize}
@@ -214,8 +224,7 @@
 		\end{equation}
 	\end{frame}
 	
-	\begin{frame}
-		\frametitle{AF Complexity Index}
+	\begin{frame}{AF Complexity Index}
 		
 		\begin{block}{Signal Complexity}
 			The more poles the signal contains, the more complex it can be considered
@@ -228,8 +237,7 @@
 
 	\end{frame}
 	
-	\begin{frame}
-		\frametitle{Atrial Source Classification}
+	\begin{frame}{Atrial Source Classification}
 			
 			\begin{block}{Challenge}
 				After performing CAGL, the automated AA source classification is still a problem
@@ -240,13 +248,12 @@
 			\end{itemize}
 	\end{frame}	
 
-	\begin{frame}
-		\frametitle{AA Source Estimation}
+	\begin{frame}{AA Source Estimation}
 		
 		\vspace{-1.5cm}
 		\begin{figure}[!ht]
 			\centering
-			\includegraphics[scale=0.75,trim={3.0cm 8.5cm 3.0cm 8.5cm},clip=true]{example_Source.pdf}
+			\includegraphics[scale=0.75,trim={3.0cm 8.5cm 3.0cm 8.5cm},clip=true]{fig/example_Source.pdf}
 		\end{figure}
 		\vspace{-2.0cm}
 		
@@ -262,8 +269,7 @@
 %% ------------------------- Experimental Results -----------------------------
 \section{Experimental Results}
 
-	\begin{frame}
-		\frametitle{Database and Experimental Setup} 
+	\begin{frame}{Database and Experimental Setup} 
 			
 		\begin{block}{Database}
 			\begin{itemize}
@@ -281,13 +287,12 @@
 		\end{itemize}
 	\end{frame}
 
-	\begin{frame}
-		\frametitle{Impact of CA step on AA complexity}
+	\begin{frame}{Impact of CA step on AA complexity}
 		
 		\vspace{-0.5cm}
 		\begin{figure}[h]
 			\centering
-			\includegraphics[scale=0.9]{boxplot_complexity.pdf}
+			\includegraphics[scale=0.9]{fig/boxplot_complexity.pdf}
 		\end{figure}
 		\vspace{-0.5cm}
 		\begin{itemize}
@@ -296,13 +301,12 @@
 		\end{itemize}
 	\end{frame}
 
-	\begin{frame}
-		\frametitle{Impact of PVI on AA complexity}
+	\begin{frame}{Impact of PVI on AA complexity}
 
 		\vspace{-0.5cm}
 		\begin{figure}[h]
 			\centering
-			\includegraphics[scale=0.9]{boxplot_PVI.pdf}
+			\includegraphics[scale=0.9]{fig/boxplot_PVI.pdf}
 		\end{figure}
 		\vspace{-0.5cm}
 		\begin{itemize}
@@ -311,13 +315,12 @@
 		\end{itemize}
 	\end{frame}
 
-	\begin{frame}
-		\frametitle{AF Recurrence vs. Complexity Before CA} 
+	\begin{frame}{AF Recurrence vs. Complexity Before CA} 
 		
 		\vspace{-0.3cm}
 		\begin{figure}[h]
 			\centering
-			\includegraphics[scale=0.7]{rank_LR.pdf}
+			\includegraphics[scale=0.7]{fig/rank_LR.pdf}
 		\end{figure}
 		\vspace{-0.5cm}
 		\begin{block}{Relationship}
@@ -331,8 +334,7 @@
 %% ------------------------- Conclusion ---------------------------------------
 \section{Conclusions}
 
-	\begin{frame}
-		\frametitle{Conclusions} 
+	\begin{frame}{Conclusions} 
 		
 		\begin{block}{Contributions}
 			\begin{itemize}
